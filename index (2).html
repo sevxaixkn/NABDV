@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NABD VERIFY</title>
+<style>
+:root{--bg:#f7fbfb;--card:#fff;--ink:#22383d;--muted:#71848a;--line:#dfeaec;--blue:#a8d8ea;--blue2:#eef9fc;--sage:#a9c5a1;--sage2:#edf6eb;--green:#6b9a70;--red:#d67b7b;--red2:#fff1f0;--yellow:#e4b357;--yellow2:#fff8e8;--nav:#fff;--shadow:0 12px 34px rgba(58,94,102,.08)}
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink)}button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+.landing{min-height:100vh;display:grid;place-items:center;padding:24px;background:linear-gradient(135deg,#f5fcfd,#f1f8ef);position:relative}.landingCard{width:min(1080px,100%);background:#fff;border:1px solid var(--line);border-radius:26px;padding:34px;box-shadow:0 20px 55px rgba(58,94,102,.09)}
+.brand{display:flex;align-items:center;gap:11px}.logo{width:49px;height:49px;border-radius:15px;background:linear-gradient(135deg,var(--blue),var(--sage));display:grid;place-items:center;font-weight:900}.brand b{font-size:22px}.brand small{display:block;font-size:10px;color:var(--muted)}.langBtn{position:absolute;top:18px;left:20px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:9px 13px;font-size:11px}
+h1{font-size:30px;margin:26px 0 8px}.lead{color:var(--muted);line-height:1.8;font-size:13px}.entityGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:22px}.entity{border:1px solid var(--line);background:#fff;border-radius:15px;padding:16px;text-align:right}.entity.selected{border-color:#80b8a5;background:var(--blue2)}.entity i{font-style:normal;font-size:24px}.entity b{display:block;margin-top:8px}.entity small{color:var(--muted);font-size:10px}.primary{background:var(--ink);color:#fff;border:0;border-radius:11px;padding:12px 18px;font-weight:700}.secondary{background:#f1f6f6;color:var(--ink);border:0;border-radius:11px;padding:11px 16px}.soft{background:var(--blue2);color:#236a80;border:0;border-radius:10px;padding:10px 13px}.landingAction{margin-top:22px}.landingHint{font-size:10px;color:var(--muted);margin-top:9px}
+.app{display:flex;min-height:100vh}.sidebar{width:255px;background:#fff;border-left:1px solid var(--line);padding:22px 15px;display:flex;flex-direction:column}.sidebar .brand{padding:0 8px 22px}.sidebar .logo{width:40px;height:40px;font-size:17px}.sidebar .brand b{font-size:17px}.nav{display:grid;gap:5px}.nav button{border:0;background:transparent;color:var(--muted);text-align:right;padding:11px;border-radius:10px}.nav button.active,.nav button:hover{background:var(--blue2);color:var(--ink);font-weight:700}.sideInfo{margin-top:auto;background:var(--sage2);border-radius:13px;padding:11px;font-size:10px;line-height:1.7}.main{flex:1;padding:25px 38px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:20px}.top h2{margin:0 0 4px;font-size:25px}.top p{margin:0;color:var(--muted);font-size:11px}.topRight{display:flex;align-items:center;gap:8px}.pill{padding:7px 10px;border-radius:17px;background:var(--sage2);color:var(--green);font-size:10px}.avatar{width:40px;height:40px;border-radius:50%;background:var(--sage);display:grid;place-items:center;font-weight:900}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.metric{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}.metric h4{font-size:10px;color:var(--muted);font-weight:400;margin:0 0 7px}.metric b{font-size:25px}.up{font-size:10px;color:#639a69;margin-right:5px}.section{margin-top:22px}.sectionTitle{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px}.sectionTitle h3{margin:0;font-size:17px}.serviceBanner{background:linear-gradient(110deg,var(--blue2),var(--sage2));border:1px solid var(--line);border-radius:17px;padding:18px 21px;display:flex;justify-content:space-between;gap:15px;align-items:center}.serviceBanner h3{margin:0 0 5px}.serviceBanner p{margin:0;font-size:11px;color:var(--muted)}
+.panelGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}.profileGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.field label{display:block;font-size:10px;color:var(--muted);margin-bottom:5px}.field input,.field select{width:100%;background:#fbfdfd;border:1px solid var(--line);border-radius:9px;padding:9px;outline:none}.field.missing input,.field.missing select{border:2px solid var(--red);background:var(--red2)}.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.chip{background:#fff;border:1px solid var(--line);padding:7px 9px;border-radius:9px;font-size:10px}.chip.active{background:var(--blue2);border-color:var(--blue)}.warning{margin-top:8px;background:var(--red2);color:#a35350;border:1px solid #efc6c3;border-radius:9px;padding:8px;font-size:10px}.snapshot{margin-top:8px;background:#fbfdfd;border:1px solid var(--line);border-radius:9px;padding:9px;font-size:10px;color:var(--muted)}
+.checks{border:1px solid var(--line);border-radius:13px;overflow:hidden}.check{display:flex;justify-content:space-between;gap:10px;padding:11px 13px;border-bottom:1px solid var(--line);font-size:11px}.check:last-child{border-bottom:0}.pass{color:#58915f}.fail{color:#b85a56}.warnText{color:#9c751f}.score{display:flex;align-items:center;gap:14px;background:var(--red2);padding:18px;border-radius:14px}.score.ready{background:var(--sage2)}.score strong{font-size:39px;color:#b95e59}.score.ready strong{color:#5f9264}.scoreTitle{font-size:22px;font-weight:900}.messageBox{background:#fbfdfd;border:1px solid var(--line);border-radius:11px;padding:13px;line-height:1.85;font-size:12px;white-space:pre-line}.messageActions{display:flex;justify-content:flex-start;gap:7px;margin-top:9px}.table{background:#fff;border:1px solid var(--line);border-radius:15px;overflow:hidden}.row{display:grid;grid-template-columns:1fr 1.3fr .6fr .7fr .8fr;gap:8px;padding:12px 14px;border-bottom:1px solid #edf3f3;align-items:center;font-size:10px}.row:last-child{border-bottom:0}.head{color:var(--muted);background:#f8fbfb}.badge{padding:5px 8px;border-radius:15px;font-size:9px;width:max-content}.badge.red{background:var(--red2);color:#b85a56}.badge.green{background:var(--sage2);color:#5f9264}
+.modalBg{position:fixed;inset:0;background:rgba(35,58,61,.42);backdrop-filter:blur(4px);display:none;padding:22px;overflow:auto;z-index:50}.modalBg.show{display:flex}.modal{width:min(980px,100%);margin:auto;background:#fff;border-radius:20px;padding:22px}.modalHead{display:flex;justify-content:space-between;gap:10px}.close{width:34px;height:34px;border-radius:50%;border:0;background:#f0f5f5;font-size:18px}.steps{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:15px 0}.step{font-size:9px;text-align:center;color:#95a4a7}.step .circle{width:28px;height:28px;border-radius:50%;background:#edf4f4;display:grid;place-items:center;margin:0 auto 4px}.step.active{color:var(--ink);font-weight:700}.step.active .circle{background:var(--blue)}.step.done .circle{background:var(--sage);color:#fff}.modalGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.upload{border:2px dashed #b8d7ce;background:#f7fbf9;border-radius:13px;padding:16px;text-align:center}.upload input{margin-top:8px}.decision{margin-top:11px;background:#fff8f7;border:1px solid #eed0cd;border-radius:13px;padding:14px;line-height:1.8;font-size:11px}.decision.ready{background:#f5fbf5;border-color:#d3e5d4}.langRow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.langOption{background:#fff;border:1px solid var(--line);padding:7px 9px;border-radius:8px;font-size:10px}.langOption.active{background:var(--blue2);border-color:var(--blue);font-weight:700}.help{position:fixed;left:20px;bottom:20px;width:45px;height:45px;border-radius:50%;border:0;background:var(--blue2);color:var(--ink);font-weight:900;z-index:30}.toast{position:fixed;left:20px;bottom:76px;background:var(--ink);color:#fff;padding:10px 13px;border-radius:9px;font-size:10px;display:none;z-index:99}
+@media(max-width:950px){.app{display:block}.sidebar{width:100%;height:auto;border-left:0;border-bottom:1px solid var(--line)}.sidebar .brand,.sideInfo{display:none}.nav{display:flex;overflow:auto}.metrics{grid-template-columns:1fr 1fr}.panelGrid{grid-template-columns:1fr}.main{padding:20px}.entityGrid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.landingCard{padding:22px}.entityGrid,.metrics,.profileGrid,.modalGrid{grid-template-columns:1fr}.top{flex-direction:column;align-items:flex-start}.serviceBanner{flex-direction:column;align-items:flex-start}.row{grid-template-columns:1fr .8fr}.row div:nth-child(2),.row div:nth-child(3),.row div:nth-child(4){display:none}.steps{grid-template-columns:repeat(3,1fr)}.modal{padding:17px}}
+</style>
+</head>
+<body>
+<section id="landing" class="landing">
+  <button id="landingLang" class="langBtn">English / العربية</button>
+  <div class="landingCard">
+    <div class="brand"><div class="logo">✦</div><div><b>NABD VERIFY</b><small>AI Transaction Health Check</small></div></div>
+    <h1 id="landingTitle">اختر الجهة الحكومية للبدء</h1>
+    <p id="landingLead" class="lead">بعد اختيار المؤسسة، سيظهر لك كل ما يخص هذه المؤسسة فقط: خدماتها، قواعد الفحص، المستندات، وبيانات المتعامل.</p>
+    <div id="entityGrid" class="entityGrid"></div>
+    <button id="startBtn" class="primary landingAction">التالي: اختيار الخدمة ←</button>
+    <div class="landingHint">One Engine • Different Rules • Different Services</div>
+  </div>
+</section>
+
+<section id="servicePage" class="landing hidden">
+  <button id="serviceLang" class="langBtn">English / العربية</button>
+  <div class="landingCard">
+    <div class="brand"><div class="logo">✦</div><div><b>NABD VERIFY</b><small id="serviceCode">RTA</small></div></div>
+    <h1 id="serviceTitle">اختر نوع المعاملة</h1><p id="serviceLead" class="lead">كل خدمة تحمّل قواعدها وقائمة فحصها الخاصة.</p>
+    <div id="serviceList" class="services"></div>
+    <div class="landingAction"><button id="openWorkspace" class="primary">فتح Workspace ←</button><button id="backBtn" class="secondary">رجوع</button></div><div id="serviceScenarioPreview" class="landingHint" style="margin-top:14px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fbfdfd">يتم تحميل سيناريو الفحص الخاص بالخدمة المختارة.</div>
+  </div>
+</section>
+
+<section id="dashboard" class="app hidden">
+<aside class="sidebar">
+  <div class="brand"><div class="logo">✦</div><div><b>NABD VERIFY</b><small>AI Transaction Health Check</small></div></div>
+  <nav class="nav">
+    <button id="navHome" class="active">⌂ لوحة التحكم</button>
+    <button id="navCheck">＋ فحص معاملة</button>
+    <button id="navCustomer">◌ ملف المتعامل</button>
+    <button id="navMessage">✉ الرسالة الموصى بها</button>
+  </nav>
+  <div class="sideInfo">● جميع الفحوصات تعمل<br>الجهة الحالية: <b id="sideEntity">RTA</b></div>
+</aside>
+<main class="main">
+  <div class="top"><div><h2 id="dashTitle">مرحباً، أحمد 👋</h2><p id="dashSub">لوحة التحكم الخاصة بالمؤسسة المختارة.</p></div><div class="topRight"><button id="changeEntity" class="toggle">تغيير المؤسسة</button><button id="dashLang" class="toggle">عربي / English</button><span class="pill">● النظام جاهز</span><div class="avatar">أ</div></div></div>
+  <div class="metrics">
+    <div class="metric"><h4>معاملات اليوم</h4><b>128</b><span class="up">↑ 12%</span></div>
+    <div class="metric"><h4>متوسط صحة المعاملة</h4><b>94.6%</b><span class="up">↑ 3.2%</span></div>
+    <div class="metric"><h4>دقة المرة الأولى</h4><b>89.2%</b><span class="up">↑ 5.8%</span></div>
+    <div class="metric"><h4>إعادة العمل التي تم تجنبها</h4><b>16.5</b><span class="up">hrs</span></div>
+  </div>
+  <div class="section" id="customerPanel">
+    <div class="sectionTitle"><h3>بيانات المتعامل</h3><span class="badge">Customer-Aware AI</span></div>
+    <div class="panelGrid">
+      <div class="panel">
+        <div class="sectionTitle"><h3>Customer Profile</h3><span class="badge green">Profile</span></div>
+        <div class="profileGrid">
+          <div id="ageField" class="field"><label>العمر</label><input id="custAge" type="number" placeholder="أدخل العمر"></div>
+          <div id="natField" class="field"><label>الجنسية</label><select id="custNationality"><option value="">اختر الجنسية</option><option>Indian</option><option>Pakistani</option><option>Emirati</option><option>Chinese</option><option>Iranian</option><option>Other</option></select></div>
+          <div id="langField" class="field"><label>اللغة المفضلة</label><select id="custLanguage"><option value="">لم يحدد</option><option>Arabic</option><option>English</option><option>Hindi</option><option>Persian</option><option>Urdu</option><option>Chinese</option></select></div>
+          <div id="techField" class="field"><label>المعرفة التقنية</label><select id="techLevel"><option value="">لم يحدد</option><option value="nontech">غير تقني</option><option value="standard">عادي</option><option value="advanced">متقدم</option></select></div>
+        </div>
+        <div class="chips"><button id="chipSenior" class="chip">كبير سن</button><button id="chipNontech" class="chip">غير تقني</button><button id="chipAccess" class="chip">احتياجات وصول</button></div>
+        <div id="customerWarning" class="warning hidden">بيانات المتعامل غير مكتملة. سيتم تحديد المعلومات الناقصة وطلبها صراحة في الرسالة.</div>
+        <div id="customerSnapshot" class="snapshot">لم تكتمل بيانات المتعامل بعد.</div>
+      </div>
+      <div class="panel">
+        <div class="sectionTitle"><h3>Communication Health</h3><span class="badge">قبل الإرسال</span></div>
+        <div class="score"><strong id="commScore">76</strong><div><div id="commStatus" class="scoreTitle">Needs Improvement</div><span id="messageReason" class="muted">أكمل بيانات المتعامل حتى يختار النظام اللغة والأسلوب المناسبين.</span></div></div>
+        <div class="checks" style="margin-top:11px"><div class="check"><span>اللغة مناسبة</span><b id="commLangCheck" class="warnText">△</b></div><div class="check"><span>الأسلوب مناسب</span><b id="commToneCheck" class="warnText">△</b></div><div class="check"><span>المطلوب محدد</span><b id="commRequestCheck" class="warnText">△</b></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="serviceBanner"><div><h3 id="chosenService">RTA → Vehicle Renewal</h3><p>قواعد الفحص ورسالة المتعامل مرتبطة بهذا السيناريو.</p></div><button id="dashCheckBtn" class="primary">＋ فحص معاملة</button></div>
+  </div>
+  <div class="section" id="adaptivePanel">
+    <div class="sectionTitle"><h3>Recommended Customer Message</h3><span class="badge" style="background:var(--blue2);color:#236a80">Personalized</span></div>
+    <div class="panelGrid">
+      <div class="panel"><div class="sectionTitle"><h3>رسالة الشركة الأصلية</h3></div><div class="messageBox">يرجى استكمال المتطلبات النظامية وإرفاق شهادة فحص سارية لإتمام المعاملة.</div></div>
+      <div class="panel"><div class="sectionTitle"><h3>الرسالة المقترحة</h3><span id="msgLangBadge" class="badge">English</span></div><div class="messageBox" id="recommendedMessage">Please provide your age, preferred language, and a valid vehicle inspection certificate so we can complete your vehicle renewal.</div><div class="langRow"><button class="langOption active" data-msg-lang="English">English</button><button class="langOption" data-msg-lang="Hindi">Hindi</button><button class="langOption" data-msg-lang="Persian">Persian</button><button class="langOption" data-msg-lang="Arabic">Arabic</button></div><div class="messageActions"><button id="copyMsg" class="secondary">Copy</button><button id="sendMsg" class="primary">Send Response</button></div></div>
+    </div>
+  </div>
+  <div class="section" id="history">
+    <div class="sectionTitle"><h3>آخر المعاملات</h3><span class="muted">لهذه المؤسسة فقط</span></div>
+    <div class="table"><div class="row head"><div>ID</div><div>الخدمة</div><div>Health</div><div>الحالة</div><div>الوقت</div></div><div class="row"><div><b>#TX-10482</b></div><div id="recentService">Vehicle Renewal</div><div>72/100</div><div><span id="dashHealth" class="badge red">BLOCKED</span></div><div>8 min</div></div><div class="row"><div><b>#TX-10481</b></div><div>Service Check</div><div>98/100</div><div><span class="badge green">READY</span></div><div>22 min</div></div></div>
+  </div>
+</main>
+</section>
+
+<div id="modalBg" class="modalBg">
+<div class="modal">
+<div class="modalHead"><div><h2 style="margin:0">فحص المعاملة</h2><p class="muted">NABD VERIFY Transaction Health Check</p></div><button id="closeModal" class="close">×</button></div>
+<div class="steps"><div id="step1" class="step active"><div class="circle">1</div>Entity</div><div id="step2" class="step"><div class="circle">2</div>Service</div><div id="step3" class="step"><div class="circle">3</div>Customer</div><div id="step4" class="step"><div class="circle">4</div>Documents</div><div id="step5" class="step"><div class="circle">5</div>Health Check</div><div id="step6" class="step"><div class="circle">6</div>Decision</div></div>
+<div id="modalStep1"><p><b id="mEntity">RTA</b> — <span id="mEntityName">هيئة الطرق والمواصلات</span></p><button id="continue1" class="primary">متابعة</button></div>
+<div id="modalStep2" class="hidden"><label class="muted">الخدمة</label><select id="modalService"></select><p class="muted" id="modalServiceHint"></p><button id="continue2" class="primary">متابعة</button></div>
+<div id="modalStep3" class="hidden"><div class="checks" id="missingCustomerList"></div><button id="continue3" class="primary" style="margin-top:11px">متابعة</button></div>
+<div id="modalStep4" class="hidden"><div class="upload"><b>رفع المستندات</b><div class="muted">PDF / JPG / PNG • Prototype</div><input id="docUpload" type="file" multiple></div><div class="checks" id="modalDocs" style="margin-top:12px"></div><button id="runCheck" class="primary" style="margin-top:11px">Run Transaction Health Check</button></div>
+<div id="modalStep5" class="hidden"><div id="modalScore" class="score"><strong id="scoreNum">72</strong><div><div id="decisionWord" class="scoreTitle">BLOCKED</div><span id="decisionText">تحتاج المعاملة إلى إصلاح قبل الإرسال.</span></div></div><div class="checks" id="modalResults" style="margin-top:12px"></div><div id="diagnosis" class="decision"></div><div class="actions" style="margin-top:11px"><button id="recheckBtn" class="secondary">🔄 Re-check</button><button id="decisionBtn" class="primary">Decision</button></div></div>
+<div id="modalStep6" class="hidden"><div id="finalDecision" class="decision ready"><h2 style="margin-top:0">Human-in-the-loop</h2><p>الذكاء الاصطناعي يفحص ويشرح ويقترح. الموظف هو صاحب القرار النهائي.</p><div class="grid3"><div class="metric"><b>AI Assisted</b><span class="muted">Analysis</span></div><div class="metric"><b>Human</b><span class="muted">Approval</span></div><div class="metric"><b>Audit</b><span class="muted">Trail</span></div></div></div><div class="adaptive" style="margin-top:12px;border:1px solid var(--line);padding:13px;border-radius:14px"><h3>Adaptive Customer Response</h3><p class="muted">اللغة المقترحة مأخوذة من ملف المتعامل.</p><div class="langRow" id="modalLanguageRow"><button class="langOption active" data-lang-choice="English">English</button><button class="langOption" data-lang-choice="Hindi">Hindi</button><button class="langOption" data-lang-choice="Persian">Persian</button><button class="langOption" data-lang-choice="Arabic">Arabic</button></div><div class="messageBox" id="modalAdaptiveMessage" style="margin-top:9px"></div></div><div class="messageActions"><button id="closeDecision" class="secondary">إغلاق</button><button id="modalSend" class="primary">Send Response</button></div></div>
+</div></div>
+<div id="toast" class="toast"></div>
+
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+let lang='ar',entity='RTA',service='renewal',fixed=false;
+const profile={age:'',nationality:'',language:'',tech:'',senior:false,nontech:false,access:false};
+
+const D={
+RTA:{ar:'هيئة الطرق والمواصلات',en:'Roads and Transport Authority',services:{
+renewal:['تجديد مركبة','Vehicle Renewal'],transfer:['نقل ملكية مركبة','Vehicle Ownership Transfer'],fine:['دفع مخالفة','Fine Payment'],license:['إصدار رخصة قيادة','Driving License Issuance'],licenseRenew:['تجديد رخصة قيادة','Driving License Renewal'],inspection:['الفحص الفني','Vehicle Inspection'],nol:['بطاقة نول','Nol Card'],parking:['خدمات المواقف','Parking Services']}},
+DEWA:{ar:'هيئة كهرباء ومياه دبي',en:'Dubai Electricity and Water Authority',services:{
+movein:['تفعيل الكهرباء والمياه (Move-in)','Electricity & Water Move-in'],moveout:['إلغاء الكهرباء والمياه (Move-out)','Electricity & Water Move-out'],move:['نقل حساب (Move-to)','Account Transfer (Move-to)'],clearance:['شهادة براءة ذمة','Clearance Certificate'],refund:['استرداد مبلغ','Refund Request'],bill:['دفع الفواتير','Bill Payment'],consumption:['مراجعة الاستهلاك','Consumption Verification'],ev:['خدمات المركبات الكهربائية','EV Services']}},
+ICP:{ar:'الهيئة الاتحادية للهوية والجنسية',en:'Federal Authority for Identity and Citizenship',services:{
+identity:['إصدار بطاقة الهوية','Emirates ID Issuance'],idrenew:['تجديد بطاقة الهوية','Emirates ID Renewal'],residency:['طلب إقامة','Residency Application'],visa:['إصدار تأشيرة دخول','Entry Visa Issuance'],golden:['الإقامة الذهبية','Golden Residency'],passport:['خدمات جواز السفر','Passport Services'],tracking:['تتبع الطلب','Application Tracking']}},
+MOHRE:{ar:'وزارة الموارد البشرية والتوطين',en:'Ministry of Human Resources and Emiratisation',services:{
+work:['تصريح عمل','Work Permit'],renew:['تجديد تصريح عمل','Work Permit Renewal'],contract:['تسجيل عقد عمل','Employment Contract Registration'],complaint:['شكوى عمالية','Labour Complaint'],domestic:['خدمات العمالة المنزلية','Domestic Worker Services'],establishment:['خدمات المنشآت','Establishment Services']}},
+DHA:{ar:'هيئة الصحة بدبي',en:'Dubai Health Authority',services:{
+appointment:['حجز موعد','Appointment Booking'],change:['تعديل موعد','Appointment Change'],fitness:['فحص اللياقة الطبية','Medical Fitness Exam'],healthfile:['الملف الصحي','Health File'],insurance:['التحقق من التأمين','Insurance Verification'],professional:['ترخيص مهني صحي','Professional License'],facility:['ترخيص منشأة صحية','Healthcare Facility License']}},
+POLICE:{ar:'شرطة دبي',en:'Dubai Police',services:{
+certificate:['شهادة بحث الحالة الجنائية','Police Clearance Certificate'],accident:['تقرير حادث مروري','Traffic Accident Report'],fine:['دفع مخالفة مرورية','Traffic Fine Payment'],permit:['طلب تصريح','Permit Request'],criminal:['بلاغ جنائي','Criminal Report'],lost:['المفقودات والمعثورات','Lost & Found'],traffic:['شهادة مرورية','Traffic Certificate']}}
+};
+
+const SC={
+renewal:{missing:['شهادة فحص مركبة سارية'],problem:'شهادة الفحص الفني منتهية.',why:'التجديد يحتاج مستند فحص ساري قبل انتقال المعاملة.',fix:'أرفق شهادة فحص مركبة سارية ثم أعد الفحص.',impact:'ستتوقف المعاملة ولن تنتقل للإرسال.'},
+transfer:{missing:['بيانات البائع والمشتري','ملكية المركبة'],problem:'بيانات نقل الملكية غير مكتملة.',why:'لا يمكن مطابقة أطراف النقل مع ملكية المركبة.',fix:'استكمل بيانات الطرفين وأرفق ملكية المركبة.',impact:'قد تعود المعاملة لمراجعة البيانات.'},
+fine:{missing:['مرجع المخالفة','بيانات المركبة'],problem:'مرجع المخالفة غير مكتمل.',why:'يحتاج النظام معرّفًا صحيحًا للمخالفة قبل السداد.',fix:'أدخل رقم المخالفة الصحيح ثم تحقق من بيانات المركبة.',impact:'قد يتم السداد على طلب خاطئ أو يتوقف الطلب.'},
+license:{missing:['فحص النظر','بيانات التدريب/التقييم'],problem:'بيانات المتطلبات الأولية للرخصة غير مكتملة.',why:'لا يمكن متابعة الطلب دون التحقق من المتطلبات الأساسية.',fix:'أرفق نتيجة فحص النظر واستكمل بيانات التدريب أو التقييم.',impact:'سيتأخر حجز/استكمال الإجراء.'},
+licenseRenew:{missing:['الرخصة الحالية','فحص النظر عند الحاجة'],problem:'الرخصة الحالية أو نتيجة الفحص غير مكتملة.',why:'يجب التحقق من الرخصة الحالية وصلاحية البيانات.',fix:'أرفق الرخصة الحالية واستكمل فحص النظر إذا ظهر كمتطلب.',impact:'لن يكتمل التجديد.'},
+inspection:{missing:['بيانات المركبة','بيانات التسجيل'],problem:'بيانات المركبة غير مكتملة للفحص.',why:'موعد الفحص يعتمد على بيانات مركبة صحيحة.',fix:'استكمل رقم اللوحة/الهيكل وبيانات التسجيل ثم أعد الفحص.',impact:'قد يتعذر إنشاء طلب الفحص الصحيح.'},
+nol:{missing:['رقم بطاقة نول','طريقة الدفع'],problem:'بيانات بطاقة نول أو وسيلة الدفع ناقصة.',why:'يلزم تحديد البطاقة والعملية المطلوبة.',fix:'أدخل رقم بطاقة نول وحدد وسيلة الدفع أو الشحن.',impact:'لن تكتمل العملية المالية.'},
+parking:{missing:['رقم اللوحة','منطقة/نوع الموقف'],problem:'معلومات الموقف غير مكتملة.',why:'لا يمكن تحديد الخدمة أو الرسم دون بيانات الموقف.',fix:'أدخل رقم اللوحة وحدد المنطقة أو نوع الموقف.',impact:'قد يتم احتساب خدمة غير صحيحة.'},
+movein:{missing:['إثبات الملكية أو Ejari','بيانات العقار'],problem:'إثبات إشغال العقار غير مكتمل.',why:'التفعيل يحتاج مستندًا يثبت حق استخدام العقار.',fix:'أرفق Ejari أو إثبات الملكية وأكمل بيانات العقار.',impact:'قد يتأخر التفعيل.'},
+moveout:{missing:['القراءة النهائية للعداد','بيانات العقار'],problem:'بيانات الإغلاق غير مكتملة.',why:'يحتاج الإغلاق إلى قراءة نهائية صحيحة للمحاسبة.',fix:'أدخل القراءة النهائية وأكمل بيانات العقار.',impact:'قد تتأخر التسوية النهائية.'},
+move:{missing:['رقم الحساب','Ejari أو الملكية','بيانات العقار الجديد'],problem:'بيانات النقل إلى العقار الجديد غير مكتملة.',why:'نقل الخدمة يحتاج ربط الحساب بالعقار الجديد.',fix:'أكمل رقم الحساب وأرفق Ejari/الملكية وبيانات العقار الجديد.',impact:'لن يكتمل النقل.'},
+clearance:{missing:['رقم الحساب','بيانات العميل'],problem:'لا يمكن التحقق من براءة الذمة.',why:'يحتاج النظام الحساب الصحيح وبيانات صاحبه.',fix:'أدخل رقم الحساب وتحقق من بيانات العميل.',impact:'لن تصدر الشهادة حتى يتم التحقق.'},
+refund:{missing:['بيانات الحساب/العميل','مرجع المبلغ'],problem:'بيانات الاسترداد غير مكتملة.',why:'يجب ربط المبلغ المسترد بالحساب والمعاملة الصحيحة.',fix:'أدخل مرجع المبلغ وبيانات الحساب أو العميل.',impact:'قد يتوقف طلب الاسترداد للمراجعة.'},
+bill:{missing:['رقم الحساب','مرجع الفاتورة'],problem:'بيانات الفاتورة غير مكتملة.',why:'يجب تحديد الحساب والفاتورة قبل الدفع.',fix:'أدخل رقم الحساب ومرجع الفاتورة ثم أعد التحقق.',impact:'يُخاطر الطلب بأن يرتبط بالحساب الخطأ.'},
+consumption:{missing:['رقم الحساب','فترة القراءة'],problem:'لا يمكن تحليل الاستهلاك دون فترة وحساب واضحين.',why:'المقارنة تحتاج نقطة بداية ونهاية مع الحساب الصحيح.',fix:'أدخل رقم الحساب وحدد فترة الاستهلاك المطلوبة.',impact:'قد تظهر نتيجة غير دقيقة.'},
+ev:{missing:['بيانات المركبة الكهربائية','بيانات الحساب'],problem:'بيانات شحن المركبة/الحساب ناقصة.',why:'يحتاج النظام ربط المركبة بحساب الشحن الصحيح.',fix:'أكمل بيانات المركبة والحساب ثم أعد الفحص.',impact:'قد يتعذر تفعيل الخدمة أو الشحن.'},
+identity:{missing:['جواز السفر','الصورة الشخصية'],problem:'مستندات الهوية الأساسية غير مكتملة.',why:'الإصدار يحتاج مستندات الهوية الأساسية.',fix:'أرفق نسخة الجواز والصورة الشخصية المطلوبة.',impact:'لن ينتقل الطلب للمعالجة.'},
+idrenew:{missing:['بطاقة الهوية الحالية','الصورة'],problem:'بيانات التجديد غير مكتملة.',why:'يحتاج النظام التحقق من البطاقة الحالية والبيانات.',fix:'أرفق البطاقة الحالية والصورة المطلوبة.',impact:'قد يتوقف التجديد للمراجعة.'},
+residency:{missing:['جواز السفر','الصورة الشخصية','بيانات الكفيل'],problem:'بيانات الإقامة أو الكفيل ناقصة.',why:'يجب مطابقة الطلب مع هوية الكفيل والمستندات.',fix:'أرفق الجواز والصورة وأكمل بيانات الكفيل.',impact:'لن تكتمل مراجعة الطلب.'},
+visa:{missing:['جواز السفر','بيانات المستفيد','بيانات الكفيل/المضيف'],problem:'بيانات المستفيد أو الكفيل ناقصة.',why:'إصدار التأشيرة يحتاج معلومات كاملة عن المستفيد والجهة المرتبطة.',fix:'استكمل بيانات المستفيد وارفع الجواز وبيانات الكفيل/المضيف.',impact:'قد يعود الطلب لاستكمال البيانات.'},
+golden:{missing:['المستند المؤهل','جواز السفر','صورة شخصية'],problem:'دليل الأهلية للإقامة الذهبية غير مكتمل.',why:'يجب إثبات الفئة التي يتم التقديم ضمنها.',fix:'أرفق المستند الذي يثبت الأهلية مع الجواز والصورة.',impact:'قد لا يمكن تقييم أهلية الطلب.'},
+passport:{missing:['بيانات الهوية','الصورة','المستند الداعم عند الحاجة'],problem:'معلومات إصدار الجواز غير مكتملة.',why:'يحتاج الطلب بيانات هوية ومستندات داعمة حسب الحالة.',fix:'أكمل بيانات الهوية وأرفق الصورة والمستند المطلوب.',impact:'سيتوقف الطلب لحين اكتماله.'},
+tracking:{missing:['رقم الطلب'],problem:'لا يوجد رقم طلب صالح للتتبع.',why:'التتبع يعتمد على معرف طلب صحيح.',fix:'أدخل رقم الطلب أو الرقم المرجعي الصحيح.',impact:'لن تظهر حالة المعاملة.'},
+work:{missing:['جواز السفر','عرض العمل/العقد','الصورة'],problem:'مستندات تصريح العمل غير مكتملة.',why:'الطلب يحتاج إثبات هوية وعلاقة عمل واضحة.',fix:'أرفق الجواز وعرض العمل/العقد والصورة.',impact:'قد يُعاد الطلب لاستكمال المستندات.'},
+renew:{missing:['التصريح الحالي','البيانات الوظيفية المحدثة'],problem:'بيانات تجديد تصريح العمل ناقصة.',why:'يجب التحقق من الوضع الحالي للموظف.',fix:'أرفق بيانات التصريح الحالي وحدّث بيانات العمل المطلوبة.',impact:'قد يتأخر التجديد.'},
+contract:{missing:['بيانات الطرفين','عقد العمل'],problem:'العقد أو بيانات أحد الطرفين ناقصة.',why:'تسجيل العقد يحتاج بيانات متطابقة للطرفين.',fix:'أكمل بيانات صاحب العمل والعامل وارفع العقد.',impact:'سيعود الطلب لاستكمال العقد.'},
+complaint:{missing:['تفاصيل الشكوى','المستندات الداعمة'],problem:'تفاصيل الشكوى غير كافية.',why:'يحتاج فريق المعالجة وقائع ومستندات يمكن التحقق منها.',fix:'أكمل وصف الشكوى وأرفق الأدلة المتوفرة.',impact:'قد يطلب منك الفريق معلومات إضافية.'},
+domestic:{missing:['هوية صاحب العمل','بيانات العامل/ة','العقد'],problem:'بيانات العمالة المنزلية غير مكتملة.',why:'يجب ربط الطلب بصاحب العمل والعامل والعقد.',fix:'أكمل بيانات الطرفين وأرفق العقد.',impact:'قد يتوقف الطلب قبل المعالجة.'},
+establishment:{missing:['بيانات المنشأة','المستندات التجارية'],problem:'ملف المنشأة ناقص.',why:'لا يمكن تحديث خدمات المنشأة دون مستنداتها الأساسية.',fix:'أكمل بيانات المنشأة وأرفق المستندات التجارية المطلوبة.',impact:'قد تتأخر الخدمة.'},
+appointment:{missing:['بيانات المريض','العيادة/التخصص','التأمين عند الحاجة'],problem:'تفاصيل الموعد غير مكتملة.',why:'يلزم تحديد المريض والخدمة المناسبة قبل الحجز.',fix:'أكمل بيانات المريض واختر العيادة/التخصص وأدخل بيانات التأمين عند الحاجة.',impact:'قد لا يتم إنشاء الموعد الصحيح.'},
+change:{missing:['رقم الموعد','الموعد الجديد'],problem:'بيانات الموعد المطلوب تغييره ناقصة.',why:'يحتاج النظام ربط التغيير بموعد موجود.',fix:'أدخل رقم الموعد واختر الموعد الجديد.',impact:'لن يتم تعديل الموعد.'},
+fitness:{missing:['الهوية','بيانات الفحص','الموعد'],problem:'بيانات فحص اللياقة الطبية غير مكتملة.',why:'يجب ربط الفحص بطلب وهوية وموعد واضح.',fix:'أكمل الهوية وبيانات الطلب والموعد.',impact:'قد يتأخر إصدار النتيجة.'},
+healthfile:{missing:['بيانات الهوية','معلومات الملف'],problem:'معلومات الملف الصحي ناقصة.',why:'إنشاء أو تحديث الملف يحتاج بيانات تعريف صحيحة.',fix:'أكمل بيانات الهوية ومعلومات الملف المطلوبة.',impact:'قد لا يتم تحديث الملف.'},
+insurance:{missing:['بطاقة التأمين','بيانات المريض'],problem:'بيانات التحقق من التأمين غير مكتملة.',why:'يلزم مطابقة التغطية مع ملف المريض.',fix:'أدخل بيانات التأمين وبطاقة المريض.',impact:'قد تتوقف الخدمة لحين التحقق.'},
+professional:{missing:['المؤهل المهني','الخبرة/الترخيص','الهوية'],problem:'ملف ترخيص المهني الصحي غير مكتمل.',why:'الترخيص يحتاج إثبات المؤهل والاعتمادات المهنية.',fix:'أرفق المؤهل المهني والوثائق الداعمة وأكمل الهوية.',impact:'قد يطلب النظام مستندات إضافية.'},
+facility:{missing:['رخصة المنشأة','بيانات الموقع','الاعتمادات المطلوبة'],problem:'متطلبات ترخيص المنشأة غير مكتملة.',why:'المنشأة تحتاج إثباتات الموقع والاعتمادات اللازمة.',fix:'أكمل بيانات المنشأة وارفع الترخيص والموافقات المطلوبة.',impact:'لن ينتقل طلب الترخيص للمراجعة النهائية.'},
+certificate:{missing:['الهوية','بيانات طلب الشهادة'],problem:'بيانات شهادة الحالة الجنائية غير مكتملة.',why:'إصدار الشهادة يحتاج تعريفًا صحيحًا لمقدم الطلب.',fix:'أكمل بيانات الهوية وطلب الشهادة.',impact:'قد يتوقف إصدار الشهادة.'},
+accident:{missing:['بيانات المركبة','تفاصيل الحادث','المرفقات عند الحاجة'],problem:'تفاصيل الحادث غير كافية.',why:'يحتاج التقرير بيانات واضحة عن المركبة والحادث.',fix:'أكمل تفاصيل الحادث وأرفق المستندات أو الصور المطلوبة.',impact:'قد يطلب التقرير استكمال البيانات.'},
+permit:{missing:['نوع التصريح','الموقع/الحدث','المرفقات المطلوبة'],problem:'بيانات التصريح غير مكتملة.',why:'صلاحية التصريح تعتمد على النشاط والموقع والمتطلبات المرتبطة به.',fix:'حدد نوع التصريح والموقع وأرفق المستندات المطلوبة.',impact:'قد يتأخر إصدار التصريح.'},
+criminal:{missing:['تفاصيل البلاغ','هوية مقدم البلاغ','المرفقات عند الحاجة'],problem:'تفاصيل البلاغ غير مكتملة.',why:'يحتاج البلاغ وصفًا ومعلومات تمكّن الجهات المختصة من المتابعة.',fix:'أكمل وصف البلاغ وبياناتك وأرفق الأدلة إن وجدت.',impact:'قد يطلب منك استكمال المعلومات.'},
+lost:{missing:['وصف المفقود','مكان/وقت الفقدان','بيانات التواصل'],problem:'بيانات المفقودات ناقصة.',why:'البيانات التفصيلية تزيد إمكانية مطابقة المعثور عليه.',fix:'أكمل وصف المفقود ومكان/وقت الفقدان وبيانات التواصل.',impact:'قد يصعب مطابقة البلاغ.'},
+traffic:{missing:['رقم المخالفة/المرجع','بيانات المركبة'],problem:'بيانات الشهادة المرورية غير مكتملة.',why:'تحتاج الخدمة إلى مرجع مروري صحيح.',fix:'أدخل رقم المخالفة أو المرجع وبيانات المركبة.',impact:'لن يتم إنشاء الشهادة الصحيحة.'}
+};
+
+SC['RTA:fine']={missing:['رقم المخالفة','بيانات المركبة'],problem:'بيانات المخالفة غير مكتملة أو لا تطابق المركبة.',why:'يجب التحقق من رقم المخالفة وربطها بالمركبة الصحيحة قبل الدفع.',fix:'أدخل رقم المخالفة وتحقق من بيانات المركبة ثم أعد الفحص.',impact:'قد يتوقف الدفع أو يرتبط بحالة غير صحيحة.'};
+SC['POLICE:fine']={missing:['رقم المخالفة/المرجع','بيانات المركبة'],problem:'بيانات المخالفة المرورية ناقصة.',why:'يلزم مرجع مروري صحيح قبل إصدار عملية الدفع.',fix:'أدخل رقم المخالفة/المرجع وبيانات المركبة ثم أعد الفحص.',impact:'لن يتم تنفيذ الدفع حتى تكتمل البيانات.'};
+
+const docLang={
+'شهادة فحص مركبة سارية':['a valid vehicle inspection certificate','شهادة فحص مركبة سارية','एक वैध वाहन निरीक्षण प्रमाणपत्र','گواهی معاینه فنی معتبر خودرو'],
+'بيانات البائع والمشتري':['buyer and seller details','بيانات البائع والمشتري','खरीदार और विक्रेता का विवरण','اطلاعات خریدار و فروشنده'],
+'ملكية المركبة':['vehicle ownership document','ملكية المركبة','वाहन स्वामित्व दस्तावेज़','مدرک مالکیت خودرو'],
+'مرجع المخالفة':['fine reference number','مرجع المخالفة','मामला/जुर्माना संदर्भ संख्या','شماره مرجع جریمه'],
+'بيانات المركبة':['vehicle details','بيانات المركبة','वाहन विवरण','اطلاعات خودرو'],
+'فحص النظر':['eye test result','نتيجة فحص النظر','परिक्षण दृष्टि परिणाम','نتیجه معاینه چشم'],
+'بيانات التدريب/التقييم':['training or assessment details','بيانات التدريب/التقييم','प्रशिक्षण/मूल्यांकन विवरण','اطلاعات آموزش/ارزیابی'],
+'الرخصة الحالية':['current licence','الرخصة الحالية','लाइसेंस वर्तमान','گواهینامه فعلی'],
+'رقم اللوحة':['plate number','رقم اللوحة','प्लेट नंबर','شماره پلاک'],
+'منطقة/نوع الموقف':['parking zone/type','منطقة أو نوع الموقف','क्षेत्र/पार्किंग प्रकार','منطقه/نوع پارکینگ'],
+'إثبات الملكية أو Ejari':['proof of ownership or Ejari','إثبات الملكية أو إيجاري','स्वामित्व या Ejari प्रमाण','مدرک مالکیت یا Ejari'],
+'بيانات العقار':['property details','بيانات العقار','संपत्ति विवरण','اطلاعات ملک'],
+'القراءة النهائية للعداد':['final meter reading','القراءة النهائية للعداد','अंतिम मीटर रीडिंग','قرائت نهایی کنتور'],
+'رقم الحساب':['account number','رقم الحساب','खाता संख्या','شماره حساب'],
+'Ejari أو الملكية':['Ejari or ownership proof','إيجاري أو إثبات الملكية','Ejari या स्वामित्व प्रमाण','Ejari یا مدرک مالکیت'],
+'بيانات العقار الجديد':['new property details','بيانات العقار الجديد','नई संपत्ति का विवरण','اطلاعات ملک جدید'],
+'بيانات العميل':['customer details','بيانات العميل','ग्राहक विवरण','اطلاعات مشتری'],
+'مرجع المبلغ':['refund amount reference','مرجع المبلغ','रिफंड राशि संदर्भ','مرجع مبلغ بازپرداخت'],
+'مرجع الفاتورة':['bill reference','مرجع الفاتورة','बिल संदर्भ','مرجع صورتحساب'],
+'فترة القراءة':['reading period','فترة القراءة','रीडिंग अवधि','دوره قرائت'],
+'بيانات المركبة الكهربائية':['EV details','بيانات المركبة الكهربائية','वाहन विद्युत विवरण','اطلاعات خودروی برقی'],
+'بيانات الحساب':['account details','بيانات الحساب','खाता विवरण','اطلاعات حساب'],
+'جواز السفر':['passport','جواز السفر','पासपोर्ट','گذرنامه'],
+'الصورة الشخصية':['personal photo','الصورة الشخصية','व्यक्तिगत फोटो','عکس شخصی'],
+'بطاقة الهوية الحالية':['current identity card','بطاقة الهوية الحالية','वर्तमान पहचान पत्र','کارت هویت فعلی'],
+'الصورة':['photo','الصورة','फोटो','عکس'],
+'بيانات الكفيل':['sponsor details','بيانات الكفيل','प्रायोजक विवरण','اطلاعات کفیل'],
+'بيانات المستفيد':['beneficiary details','بيانات المستفيد','लाभार्थी विवरण','اطلاعات ذی‌نفع'],
+'بيانات الكفيل/المضيف':['sponsor/host details','بيانات الكفيل/المضيف','प्रायोजक/मेज़बान विवरण','اطلاعات کفیل/میزبان'],
+'المستند المؤهل':['eligibility document','المستند المؤهل','पात्रता दस्तावेज़','مدرک احراز شرایط'],
+'بيانات الهوية':['identity details','بيانات الهوية','पहचान विवरण','اطلاعات هویتی'],
+'المستند الداعم عند الحاجة':['supporting document if required','المستند الداعم عند الحاجة','आवश्यक सहायक दस्तावेज़','مدرک پشتیبان در صورت نیاز'],
+'رقم الطلب':['application number','رقم الطلب','आवेदन संख्या','شماره درخواست'],
+'عرض العمل/العقد':['job offer/employment contract','عرض العمل/العقد','नौकरी प्रस्ताव/अनुबंध','پیشنهاد کار/قرارداد'],
+'التصريح الحالي':['current work permit','التصريح الحالي','वर्तमान कार्य परमिट','مجوز کار فعلی'],
+'البيانات الوظيفية المحدثة':['updated employment details','البيانات الوظيفية المحدثة','अद्यतन रोजगार विवरण','اطلاعات شغلی به‌روز'],
+'بيانات الطرفين':['both parties’ details','بيانات الطرفين','दोनों पक्षों का विवरण','اطلاعات هر دو طرف'],
+'عقد العمل':['employment contract','عقد العمل','रोजगार अनुबंध','قرارداد کاری'],
+'تفاصيل الشكوى':['complaint details','تفاصيل الشكوى','शिकायत विवरण','جزئیات شکایت'],
+'المستندات الداعمة':['supporting documents','المستندات الداعمة','सहायक दस्तावेज़','مدارک پشتیبان'],
+'هوية صاحب العمل':['employer identity','هوية صاحب العمل','नियोक्ता की पहचान','هویت کارفرما'],
+'بيانات العامل/ة':['worker details','بيانات العامل/ة','कर्मचारी विवरण','اطلاعات کارگر/کارگره'],
+'العقد':['contract','العقد','अनुबंध','قرارداد'],
+'بيانات المريض':['patient details','بيانات المريض','रोगी विवरण','اطلاعات بیمار'],
+'العيادة/التخصص':['clinic/specialty','العيادة أو التخصص','क्लिनिक/विशेषता','کلینیک/تخصص'],
+'التأمين عند الحاجة':['insurance details if required','بيانات التأمين عند الحاجة','बीमा विवरण यदि आवश्यक हो','اطلاعات بیمه در صورت نیاز'],
+'رقم الموعد':['appointment number','رقم الموعد','अपॉइंटमेंट नंबर','شماره نوبت'],
+'الموعد الجديد':['new appointment date/time','الموعد الجديد','नया अपॉइंटमेंट समय','زمان نوبت جدید'],
+'بيانات الفحص':['examination details','بيانات الفحص','परीक्षण विवरण','اطلاعات معاینه'],
+'معلومات الملف':['health file information','معلومات الملف','स्वास्थ्य फ़ाइल जानकारी','اطلاعات پرونده سلامت'],
+'بطاقة التأمين':['insurance card','بطاقة التأمين','बीमा कार्ड','کارت بیمه'],
+'المؤهل المهني':['professional qualification','المؤهل المهني','पेशेवर योग्यता','مدرک حرفه‌ای'],
+'الخبرة/الترخيص':['experience/licence records','الخبرة أو الترخيص','अनुभव/लाइसेंस रिकॉर्ड','سوابق تجربه/مجوز'],
+'الهوية':['identity','الهوية','पहचान','هویت'],
+'رخصة المنشأة':['facility licence','رخصة المنشأة','संस्था लाइसेंस','مجوز مرکز'],
+'بيانات الموقع':['site/location details','بيانات الموقع','स्थान विवरण','اطلاعات محل'],
+'الاعتمادات المطلوبة':['required approvals','الاعتمادات المطلوبة','आवश्यक अनुमोदन','تاییدیه‌های لازم'],
+'بيانات طلب الشهادة':['certificate request details','بيانات طلب الشهادة','प्रमाणपत्र आवेदन विवरण','جزئیات درخواست گواهی'],
+'تفاصيل الحادث':['accident details','تفاصيل الحادث','दुर्घटना विवरण','جزئیات حادثه'],
+'المرفقات عند الحاجة':['attachments if required','المرفقات عند الحاجة','आवश्यक संलग्नक','پیوست‌ها در صورت نیاز'],
+'نوع التصريح':['permit type','نوع التصريح','परमिट प्रकार','نوع مجوز'],
+'الموقع/الحدث':['site/event details','الموقع أو الحدث','स्थान/कार्यक्रम विवरण','اطلاعات محل/رویداد'],
+'المرفقات المطلوبة':['required attachments','المرفقات المطلوبة','आवश्यक संलग्नक','پیوست‌های لازم'],
+'تفاصيل البلاغ':['report details','تفاصيل البلاغ','रिपोर्ट विवरण','جزئیات گزارش'],
+'هوية مقدم البلاغ':['reporter identity','هوية مقدم البلاغ','शिकायतकर्ता की पहचान','هویت گزارش‌دهنده'],
+'وصف المفقود':['lost item description','وصف المفقود','खोई वस्तु का विवरण','توضیحات مورد گمشده'],
+'مكان/وقت الفقدان':['loss location/time','مكان ووقت الفقدان','खोने का स्थान/समय','محل/زمان مفقود شدن'],
+'بيانات التواصل':['contact details','بيانات التواصل','संपर्क विवरण','اطلاعات تماس'],
+'رقم المخالفة/المرجع':['fine/reference number','رقم المخالفة أو المرجع','जुर्माना/संदर्भ संख्या','شماره جریمه/مرجع']
+};
+
+const serviceCustomer={
+renewal:{age:67,nationality:'Indian',language:'Hindi',tech:'nontech',senior:true,nontech:true},
+movein:{age:41,nationality:'Emirati',language:'Arabic',tech:'standard'},residency:{age:29,nationality:'Pakistani',language:'Urdu',tech:'standard'},work:{age:32,nationality:'Indian',language:'Hindi',tech:'nontech'},appointment:{age:68,nationality:'Emirati',language:'Arabic',tech:'nontech',senior:true},certificate:{age:35,nationality:'Chinese',language:'English',tech:'standard'}
+};
+const msgTemplate={
+English:(items,svc)=>`To complete your ${svc}, please provide: ${items.join(', ')}.`,
+Hindi:(items,svc)=>`आपकी सेवा पूरी करने के लिए कृपया ये दस्तावेज़ या जानकारी प्रदान करें: ${items.join(', ')}।`,
+Persian:(items,svc)=>`برای تکمیل این خدمت لطفاً این مدارک یا اطلاعات را ارائه کنید: ${items.join('، ')}.`,
+Arabic:(items,svc)=>`لإكمال هذه الخدمة، يرجى تزويدنا بالتالي: ${items.join('، ')}.`,
+Urdu:(items,svc)=>`اس سروس کو مکمل کرنے کے لیے براہ کرم یہ دستاویزات یا معلومات فراہم کریں: ${items.join('، ')}۔`,
+Chinese:(items,svc)=>`为了完成此项服务，请提供以下资料或信息：${items.join('、')}。`
+};
+const customerFieldText={
+English:{'العمر':'your age','الجنسية':'your nationality','اللغة المفضلة':'your preferred language','مستوى المعرفة التقنية':'your preferred assistance level'},
+Hindi:{'العمر':'आपकी आयु','الجنسية':'आपकी राष्ट्रीयता','اللغة المفضلة':'आपकी पसंदीदा भाषा','مستوى المعرفة التقنية':'आपकी सहायता प्राथमिकता'},
+Persian:{'العمر':'سن شما','الجنسية':'ملیت شما','اللغة المفضلة':'زبان ترجیحی شما','مستوى المعرفة التقنية':'سطح کمک مورد نیاز شما'},
+Arabic:{'العمر':'العمر','الجنسية':'الجنسية','اللغة المفضلة':'اللغة المفضلة','مستوى المعرفة التقنية':'مستوى المساعدة المفضل'},
+Urdu:{'العمر':'آپ کی عمر','الجنسية':'آپ کی قومیت','اللغة المفضلة':'آپ کی پسندیدہ زبان','مستوى المعرفة التقنية':'آپ کی مطلوبہ معاونت کی سطح'},
+Chinese:{'العمر':'您的年龄','الجنسية':'您的国籍','اللغة المفضلة':'您的首选语言','مستوى المعرفة التقنية':'您偏好的协助方式'}
+};
+const genericServiceText={
+renewal:{English:'vehicle renewal',Hindi:'वाहन नवीनीकरण',Persian:'تمدید خودرو',Arabic:'تجديد المركبة',Urdu:'گاڑی کی تجدید',Chinese:'车辆续期'},
+movein:{English:'electricity and water activation',Hindi:'बिजली और पानी की सक्रियता',Persian:'فعال‌سازی برق و آب',Arabic:'تفعيل الكهرباء والمياه',Urdu:'بجلی اور پانی کی سروس کا فعال ہونا',Chinese:'电力和供水开通'},
+residency:{English:'residency application',Hindi:'निवास आवेदन',Persian:'درخواست اقامت',Arabic:'طلب الإقامة',Urdu:'رہائشی درخواست',Chinese:'居留申请'},
+work:{English:'work permit',Hindi:'वर्क परमिट',Persian:'مجوز کار',Arabic:'تصريح العمل',Urdu:'ورک پرمٹ',Chinese:'工作许可'},
+appointment:{English:'medical appointment',Hindi:'चिकित्सा अपॉइंटमेंट',Persian:'نوبت پزشکی',Arabic:'الموعد الطبي',Urdu:'طبی اپائنٹمنٹ',Chinese:'医疗预约'},
+certificate:{English:'police certificate request',Hindi:'पुलिस प्रमाणपत्र अनुरोध',Persian:'درخواست گواهی پلیس',Arabic:'طلب الشهادة الشرطية',Urdu:'پولیس سرٹیفکیٹ کی درخواست',Chinese:'警方证明申请'}
+};
+function trDocs(items,langName){return items.map(x=>(docLang[x]&&docLang[x][({English:0,Arabic:1,Hindi:2,Persian:3}[langName]??0)])||x)}
+function currentScenario(){return SC[entity+':'+service]||SC[service]||{missing:['المستندات المطلوبة حسب الخدمة'],problem:'توجد بيانات تحتاج تحققًا.',why:'لا تزال هناك متطلبات لم يتم التحقق منها.',fix:'راجع قائمة المتطلبات وأكمل النواقص ثم أعد الفحص.',impact:'قد تعود المعاملة للمراجعة.'}}
+function customerMissing(){const miss=[];if(!$('custAge').value)miss.push('العمر');if(!$('custNationality').value)miss.push('الجنسية');if(!$('custLanguage').value)miss.push('اللغة المفضلة');if(!$('techLevel').value)miss.push('مستوى المعرفة التقنية');return miss}
+function applyCustomerDefaults(){
+ const fallback={RTA:{age:42,nationality:'Emirati',language:'Arabic',tech:'standard'},DEWA:{age:41,nationality:'Emirati',language:'Arabic',tech:'standard'},ICP:{age:29,nationality:'Pakistani',language:'Urdu',tech:'standard'},MOHRE:{age:32,nationality:'Indian',language:'Hindi',tech:'nontech'},DHA:{age:68,nationality:'Emirati',language:'Arabic',tech:'nontech',senior:true},POLICE:{age:35,nationality:'Emirati',language:'Arabic',tech:'standard'}};
+ const c=serviceCustomer[service]||fallback[entity]||{age:35,nationality:'Other',language:'English',tech:'standard'};
+ $('custAge').value=c.age||'';$('custNationality').value=c.nationality||'';$('custLanguage').value=c.language||'';$('techLevel').value=c.tech||'';
+ profile.senior=!!c.senior||Number(c.age)>=60;profile.nontech=c.tech==='nontech';profile.access=false;updateCustomer()
+}
+function updateCustomer(){
+ profile.age=$('custAge').value;profile.nationality=$('custNationality').value;profile.language=$('custLanguage').value;profile.tech=$('techLevel').value;
+ profile.senior=Number(profile.age)>=60;profile.nontech=profile.tech==='nontech';
+ const miss=customerMissing();['ageField','natField','langField','techField'].forEach(id=>$(id)?.classList.remove('missing'));
+ if(!profile.age)$('ageField').classList.add('missing');if(!profile.nationality)$('natField').classList.add('missing');if(!profile.language)$('langField').classList.add('missing');if(!profile.tech)$('techField').classList.add('missing');
+ $('customerWarning').classList.toggle('hidden',miss.length===0);
+ const parts=[];if(profile.age)parts.push(profile.age+' years');if(profile.nationality)parts.push(profile.nationality);if(profile.language)parts.push(profile.language);if(profile.tech)parts.push(profile.tech==='nontech'?'Non-technical':profile.tech);if(profile.senior)parts.push('Senior');
+ $('customerSnapshot').textContent=parts.length?parts.join(' • '):'لم تكتمل بيانات المتعامل بعد.';
+ $('chipSenior').classList.toggle('active',profile.senior);$('chipNontech').classList.toggle('active',profile.nontech);
+ $('commScore').textContent=Math.min(96,miss.length?76:92);$('commStatus').textContent=miss.length?'Needs Improvement':'Good';
+ $('messageReason').textContent=miss.length?'بيانات ناقصة — سيطلبها النظام صراحة في الرسالة.':'اللغة والأسلوب متوافقان مع ملف المتعامل.';
+ $('commLangCheck').textContent=profile.language?'✓':'△';$('commLangCheck').className=profile.language?'pass':'warnText';
+ $('commToneCheck').textContent=(profile.senior||profile.nontech)?'✓':'△';$('commToneCheck').className=(profile.senior||profile.nontech)?'pass':'warnText';
+ $('commRequestCheck').textContent=currentScenario().missing.length?'△':'✓';$('commRequestCheck').className='warnText';
+ updateRecommendedMessage();
+}
+function toggleChip(k){if(k==='senior'){profile.senior=!profile.senior;if(profile.senior&&!Number($('custAge').value))$('custAge').value=60}if(k==='nontech'){profile.nontech=!profile.nontech;$('techLevel').value=profile.nontech?'nontech':''}if(k==='access')profile.access=!profile.access;$('chipAccess').classList.toggle('active',!!profile.access);updateCustomer()}
+function serviceLabel(){return D[entity].services[service]?[lang==='ar'?D[entity].services[service][0]:D[entity].services[service][1]]:service}
+function updateRecommendedMessage(){
+ const sc=currentScenario(), langName=profile.language||'English';
+ let items=trDocs(sc.missing,langName);
+ const missing=customerMissing();
+ if(missing.length){const dict=customerFieldText[langName]||customerFieldText.English;items=items.concat(missing.map(x=>dict[x]||x));}
+ const serviceText=(genericServiceText[service]&&genericServiceText[service][langName])||serviceLabel();
+ const template=msgTemplate[langName]||msgTemplate.English;
+ $('recommendedMessage').textContent=template(items,serviceText);
+ $('msgLangBadge').textContent=langName;
+ if($('modalAdaptiveMessage'))$('modalAdaptiveMessage').textContent=$('recommendedMessage').textContent;
+}
+function renderEntities(){const box=$('entityGrid');box.innerHTML='';const icons={RTA:'🚗',DEWA:'💧',ICP:'🪪',DHA:'🏥',MOHRE:'💼',POLICE:'👮'};Object.entries(D).forEach(([id,s])=>{const b=document.createElement('button');b.className='entity'+(id===entity?' selected':'');b.dataset.id=id;b.innerHTML='<i>'+icons[id]+'</i><b>'+s.ar+'</b><small>'+s.en+'</small>';b.addEventListener('click',()=>chooseEntity(b));box.appendChild(b)})}
+function chooseEntity(btn){document.querySelectorAll('#entityGrid .entity').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected');entity=btn.dataset.id;service=Object.keys(D[entity].services)[0]}
+function renderServices(){const s=D[entity];$('serviceCode').textContent=entity;const box=$('serviceList');box.innerHTML='';Object.entries(s.services).forEach(([k,v],i)=>{const b=document.createElement('button');b.className='service'+(k===service?' selected':'');const sc=SC[k]||{};b.innerHTML='<span>📄</span><b>'+v[0]+'</b><small>'+v[1]+' • '+(sc.missing?sc.missing.length:0)+' key checks</small>';b.addEventListener('click',()=>{document.querySelectorAll('#serviceList .service').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');service=k;updateServicePreview()});box.appendChild(b)});updateServicePreview()}
+function updateServicePreview(){const s=SC[service]||{};if($('serviceScenarioPreview'))$('serviceScenarioPreview').textContent='سيناريو تجريبي: '+(s.problem||'فحص متطلبات الخدمة')+' الحل: '+(s.fix||'أكمل المتطلبات ثم أعد الفحص.')+' المستندات/البيانات المطلوبة: '+((s.missing||[]).join('، '));}
+function showServices(){ $('landing').classList.add('hidden'); $('servicePage').classList.remove('hidden'); renderServices() }
+function openWorkspace(){ $('servicePage').classList.add('hidden'); $('dashboard').classList.remove('hidden'); const s=D[entity],v=s.services[service]; $('sideEntity').textContent=entity; $('chosenService').textContent=entity+' → '+v[1]; $('recentService').textContent=v[1]; $('dashSub').textContent='لوحة التحكم الخاصة بـ '+s.ar; applyCustomerDefaults(); updateScenarioDashboard(); }
+function updateScenarioDashboard(){const s=currentScenario();$('recommendedMessage').textContent='';updateRecommendedMessage();$('dashHealth').textContent=(entity==='RTA'&&service==='renewal'&&!fixed)?'BLOCKED':'REVIEW';$('dashHealth').className='badge '+((entity==='RTA'&&service==='renewal'&&!fixed)?'red':'green');$('commStatus').textContent=customerMissing().length?'Needs Improvement':'Good';}
+function openCheck(){ fixed=false; $('modalBg').classList.add('show'); modalStep(1); $('mEntity').textContent=entity; $('mEntityName').textContent=D[entity].ar; renderModalCustomer(); }
+function closeModal(){ $('modalBg').classList.remove('show') }
+function modalStep(n){for(let i=1;i<=6;i++){ $('modalStep'+i).classList.toggle('hidden',i!==n); const s=$('step'+i);s.classList.toggle('active',i===n);s.classList.toggle('done',i<n)} if(n===2){const sel=$('modalService');sel.innerHTML=Object.entries(D[entity].services).map(([k,v])=>'<option value="'+k+'">'+v[1]+'</option>').join('');sel.value=service;updateModalService()} if(n===3)renderModalCustomer(); if(n===4)renderDocs(); if(n===5)renderResults(); if(n===6)updateModalAdaptive()}
+function updateModalService(){service=$('modalService').value;$('modalServiceHint').textContent='سيتم تحميل قواعد ومتطلبات '+D[entity].services[service][1]+' تلقائيًا.'}
+function requiredDocs(){return currentScenario().missing}
+function renderDocs(){const arr=requiredDocs();$('modalDocs').innerHTML=arr.map((x,i)=>'<div class="check"><span>'+x+'</span><b class="'+(entity==='RTA'&&service==='renewal'&&!fixed&&i===arr.length-1?'fail':'pass')+'">'+(entity==='RTA'&&service==='renewal'&&!fixed&&i===arr.length-1?'❌':'✓')+'</b></div>').join('')}
+function renderModalCustomer(){const miss=customerMissing();$('missingCustomerList').innerHTML=(miss.length?miss:['✓ لا توجد بيانات متعامل ناقصة']).map(x=>'<div class="check"><span>'+x+'</span><b class="'+(miss.length?'fail':'pass')+'">'+(miss.length?'❌':'✓')+'</b></div>').join('')}
+function showToast(message){const node=$('toast');if(!node)return;node.textContent=message;node.style.display='block';window.clearTimeout(window.__nabdToastTimer);window.__nabdToastTimer=window.setTimeout(()=>{node.style.display='none'},2200);}
+function runCheck(){showToast('جارٍ فحص المعاملة على قواعد '+D[entity].en+'...');setTimeout(()=>modalStep(5),450)}
+function renderResults(){
+ const s=currentScenario();const bad=entity==='RTA'&&service==='renewal'&&!fixed;const avg=bad?72:(customerMissing().length?84:95);
+ $('scoreNum').textContent=avg;$('modalScore').className='score '+(bad?'':'ready');$('decisionWord').textContent=bad?'BLOCKED':(customerMissing().length?'REVIEW':'READY');$('decisionText').textContent=bad?'تحتاج المعاملة إلى إصلاح قبل الإرسال.':customerMissing().length?'أكمل بيانات المتعامل قبل إرسال الرد.':'المعاملة سليمة وجاهزة للمراجعة البشرية.';
+ const labels=['Data Completeness','Document Presence','Document Validity','Data Consistency','Date Validation','Duplicate Detection','Eligibility','Fee Validation'];
+ $('modalResults').innerHTML=labels.map((x,i)=>{const fail=bad&&i===2;const warn=!fail&&customerMissing().length>0&&i===0;return '<div class="check"><span>'+x+'</span><b class="'+(fail?'fail':warn?'warnText':'pass')+'">'+(fail?'❌':warn?'△':'✓')+'</b></div>'}).join('');
+ $('diagnosis').className='decision '+(bad?'':'ready');
+ $('diagnosis').innerHTML='<b>المشكلة:</b> '+s.problem+'<br><b>لماذا؟</b> '+s.why+'<br><b>الحل:</b> '+s.fix+'<br><b>التأثير:</b> '+s.impact+'<br><br><b>ما الذي يجب أن يرسله المتعامل؟</b> '+s.missing.join('، ')+'.';
+ updateRecommendedMessage();
+}
+function recheck(){fixed=true;renderDocs();renderResults();updateRecommendedMessage();showToast(customerMissing().length?'تمت إعادة الفحص — ما زالت هناك بيانات متعامل تحتاج إكمالها':'تمت إعادة الفحص بنجاح — المعاملة جاهزة للمراجعة')}
+function updateModalAdaptive(){updateRecommendedMessage()}
+function setMsgLanguage(l){$('custLanguage').value=l;updateCustomer();document.querySelectorAll('[data-msg-lang]').forEach(b=>b.classList.toggle('active',b.dataset.msgLang===l));document.querySelectorAll('[data-lang-choice]').forEach(b=>b.classList.toggle('active',b.dataset.langChoice===l));updateModalAdaptive()}
+function copyMessage(){const t=$('recommendedMessage').textContent;if(navigator.clipboard?.writeText){navigator.clipboard.writeText(t).then(()=>showToast('تم نسخ الرسالة')).catch(()=>fallbackCopy(t))}else fallbackCopy(t)}
+function fallbackCopy(t){const a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(a);showToast('تم نسخ الرسالة')}
+function sendMessage(){showToast('تم إرسال الرسالة للمتعامل في النموذج التجريبي');closeModal()}
+function toggleLang(){lang=lang==='ar'?'en':'ar';document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';$('landingTitle').textContent=lang==='ar'?'اختر الجهة الحكومية للبدء':'Choose Government Entity';$('landingLead').textContent=lang==='ar'?'بعد اختيار المؤسسة، سيظهر لك كل ما يخص هذه المؤسسة فقط: خدماتها، قواعد الفحص، المستندات، وبيانات المتعامل.':'Choose the institution first. Then only its services, validation rules, documents, and customer profile will appear.';$('startBtn').textContent=lang==='ar'?'التالي: اختيار الخدمة ←':'Next: Choose Service →';$('serviceTitle').textContent=lang==='ar'?'اختر نوع المعاملة':'Choose Transaction Type';$('serviceLead').textContent=lang==='ar'?'كل خدمة تحمّل قواعدها وقائمة فحصها الخاصة.':'Each service loads its own validation rules and checklist.';if(!$('dashboard').classList.contains('hidden'))$('dashSub').textContent=lang==='ar'?'لوحة التحكم الخاصة بـ '+D[entity].ar:'Dashboard for '+D[entity].en;renderServices();updateRecommendedMessage()}
+$('changeEntity').addEventListener('click',()=>{dashboard.classList.add('hidden');landing.classList.remove('hidden')});$('startBtn').addEventListener('click',showServices);$('backBtn').addEventListener('click',()=>{ $('servicePage').classList.add('hidden');$('landing').classList.remove('hidden')});$('openWorkspace').addEventListener('click',openWorkspace);$('dashCheckBtn').addEventListener('click',openCheck);$('navCheck').addEventListener('click',openCheck);$('navHome').addEventListener('click',()=>scrollTo(0,0));$('navCustomer').addEventListener('click',()=>scrollToSection('customerPanel'));$('navMessage').addEventListener('click',()=>scrollToSection('adaptivePanel'));$('dashLang').addEventListener('click',toggleLang);$('landingLang').addEventListener('click',toggleLang);$('serviceLang').addEventListener('click',toggleLang);$('closeModal').addEventListener('click',closeModal);$('continue1').addEventListener('click',()=>modalStep(2));$('continue2').addEventListener('click',()=>modalStep(3));$('continue3').addEventListener('click',()=>{if(customerMissing().length)showToast('يوجد بيانات متعامل ناقصة وسيتم طلبها قبل الإرسال');modalStep(4)});$('runCheck').addEventListener('click',runCheck);$('recheckBtn').addEventListener('click',recheck);$('decisionBtn').addEventListener('click',()=>modalStep(6));$('closeDecision').addEventListener('click',closeModal);$('modalSend').addEventListener('click',sendMessage);$('copyMsg').addEventListener('click',copyMessage);$('sendMsg').addEventListener('click',sendMessage);['custAge','custNationality','custLanguage','techLevel'].forEach(id=>{['input','change'].forEach(ev=>$(id).addEventListener(ev,updateCustomer))});$('chipSenior').addEventListener('click',()=>toggleChip('senior'));$('chipNontech').addEventListener('click',()=>toggleChip('nontech'));$('chipAccess').addEventListener('click',()=>toggleChip('access'));document.querySelectorAll('[data-msg-lang]').forEach(b=>b.addEventListener('click',()=>setMsgLanguage(b.dataset.msgLang)));document.querySelectorAll('[data-lang-choice]').forEach(b=>b.addEventListener('click',()=>setMsgLanguage(b.dataset.langChoice)));$('modalService').addEventListener('change',updateModalService);$('modalBg').addEventListener('click',e=>{if(e.target===$('modalBg'))closeModal()});function scrollToSection(id){$(id).scrollIntoView({behavior:'smooth'})}
+renderEntities();renderServices();applyCustomerDefaults();
+})();
+</script>
+</body></html>
